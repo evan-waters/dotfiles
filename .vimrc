@@ -9,6 +9,7 @@ filetype plugin on
 set tabstop=2
 set shiftwidth=2
 set expandtab
+set shell=/bin/bash\ -l
 call pathogen#infect()
 
 " set the runtime path to include Vundle and initialize
@@ -33,6 +34,8 @@ Bundle 'scrooloose/nerdtree'
 Plugin 'luochen1990/rainbow'
 
 Bundle 'vim-ruby/vim-ruby'
+
+Bundle 'ntpeters/vim-better-whitespace'
 
 " Some settings to enable the theme:
 set number        " Show line numbers
