@@ -31,10 +31,10 @@ alias gocd-agent-console="docker exec -it gocd-agent bash"
 
 run_in_docker() {
   path=`pwd`
-  if [ "${stringZ:26:100}" = "gpigs-core" ] ; then
-    docker run --rm --link trelora-mysql:mysql -v /home/iancrosser/Projects/gpigs-core:/Projects/gpigs-core iancrosser/trelora:server $@
+  if [ "${path:26:100}" = "gpigs-core" ] ; then
+    docker run -it --rm --link trelora-mysql:mysql -v /home/iancrosser/Projects/gpigs-core:/Projects/gpigs-core --env-file <(env | grep TRELORA) iancrosser/trelora:server $@
   fi
-  if [ "${stringZ:26:100}" = "stubbery" ] ; then
-    docker run --rm --link stubbery-postgres:postgres -v /home/iancrosser/Projects/stubbery:/Projects/stubbery iancrosser/stubbery:server $@
+  if [ "${path:26:100}" = "stubbery" ] ; then
+    docker run -it --rm --link stubbery-postgres:postgres -v /home/iancrosser/Projects/stubbery:/Projects/stubbery iancrosser/stubbery:server $@
   fi
 }
