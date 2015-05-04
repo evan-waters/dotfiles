@@ -21,6 +21,12 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
+# Keep history forever from multiple terminals
+shopt -s histappend
+
+# Write history after every command
+export PROMPT_COMMAND="history -a; history -n"
+
 # Git tab  completion
 if [ -d /Applications/Xcode.app/Contents/Developer/usr/share/git-core ] ; then
   source "/Applications/Xcode.app/Contents/Developer/usr/share/git-core/git-completion.bash"
