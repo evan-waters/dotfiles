@@ -18,15 +18,6 @@ alias trelora-mysql-console="docker exec -it trelora-mysql bash"
 alias run-gpigs-core-server="docker run -ti -p 127.0.0.1:3000:3000 -p 127.0.0.1:3001:3001 --name gpigs-core --link trelora-mysql:mysql -v ~/Projects/gpigs-core:/Projects/gpigs-core --env-file <(env | grep TRELORA) -e PORT=3000 -e RAILS_ENV=development -d iancrosser/trelora:server"
 alias gpigs-core-console="docker exec -it gpigs-core bash"
 
-### go.cd
-# Server
-alias run-gocd-server="docker run -ti -p 8153:8153 --name gocd-server -v ~/.ssh:/root/.ssh -e -d gocd/gocd-server:14.4.0-2"
-alias gocd-server-console="docker exec -it gocd-server bash"
-
-# Agent
-alias run-gocd-agent="docker run -ti --name gocd-agent --link gocd-server:go-server gocd/gocd-agent"
-alias gocd-agent-console="docker exec -it gocd-agent bash"
-
 ### Docker helpers
 
 run_in_docker() {
