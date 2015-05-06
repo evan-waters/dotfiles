@@ -11,7 +11,7 @@ alias stubbery-console="docker exec -it stubbery bash"
 
 ### Trelora
 # Mysql
-alias run-trelora-mysql="docker run --name trelora-mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -d mysql:latest"
+alias run-trelora-mysql="docker run --name trelora-mysql -v ~/.my.cnf:/root/.my.cnf -v ~/bin/trelora-prod-dump:/usr/bin/trelora-prod-dump -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -d mysql:latest"
 alias trelora-mysql-console="docker exec -it trelora-mysql bash"
 
 # App
