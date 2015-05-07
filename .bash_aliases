@@ -8,7 +8,7 @@ alias stubbery-postgres-console="docker exec -it stubbery-postgres bash"
 # App
 alias run-stubbery="docker run -ti -p 127.0.0.1:3000:3000 -p 127.0.0.1:3001:3001 --name stubbery --link stubbery-postgres:postgres -v ~/.vimrc:/root/.vimrc -v ~/Projects/stubbery:/Projects/stubbery -e PORT=3000 -e RAILS_ENV=development -d iancrosser/stubbery:server"
 alias stubbery-console="docker exec -it stubbery bash"
-alias rebuild-stubbery="docker kill stubbery && docker rm stubbery && docker build -t iancrosser/stubbery:server ."
+alias rebuild-stubbery="docker build -t iancrosser/stubbery:server ."
 
 ### Trelora
 # Mysql
@@ -17,10 +17,15 @@ alias trelora-mysql-console="docker exec -it trelora-mysql bash"
 
 # App
 alias run-gpigs-core-server="docker run -ti -p 127.0.0.1:3000:3000 -p 127.0.0.1:3001:3001 --name gpigs-core --link trelora-mysql:mysql -v ~/Projects/gpigs-core:/Projects/gpigs-core --env-file <(env | grep TRELORA) -e PORT=3000 -e RAILS_ENV=development -d iancrosser/trelora:server"
+alias run-gpigs-core-server-debug="docker run -ti -p 127.0.0.1:3000:3000 -p 127.0.0.1:3001:3001 --name gpigs-core --link trelora-mysql:mysql -v ~/Projects/gpigs-core:/Projects/gpigs-core --env-file <(env | grep TRELORA) -e PORT=3000 -e RAILS_ENV=development iancrosser/trelora:server"
 alias gpigs-core-console="docker exec -it gpigs-core bash"
-alias rebuild-gpigs-core="docker kill gpigs-core && docker rm gpigs-core && docker build -t iancrosser/trelora:server ."
+alias rebuild-gpigs-core="docker build -t iancrosser/trelora:server ."
 
 ### Docker helpers
+
+alias dockercleancontainers="docker ps -a --no-trunc| grep 'Exit' | awk '{print \$1}' | xargs -L 1 -r docker rm"
+alias dockercleanimages="docker images --no-trunc | grep none | awk '{print \$3}' | xargs -L 1 -r docker rmi"
+alias dockerclean="dockercleancontainers && dockercleanimages"
 
 run_in_docker() {
   path=`pwd`
