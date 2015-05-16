@@ -34,5 +34,7 @@ run_in_docker() {
   fi
   if [ "${path:26:100}" = "stubbery" ] ; then
     docker run -it --rm --link stubbery-postgres:postgres -v /home/iancrosser/Projects/stubbery:/Projects/stubbery iancrosser/stubbery:server $@
+  else
+    docker run -it --rm --link redis:redis -p 5000:5000 -v $path:${path:16:100} iancrosser/${path:26:100} $@
   fi
 }
