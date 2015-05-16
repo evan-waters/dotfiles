@@ -63,5 +63,8 @@ let g:NERDTreeDirArrows=0
 " Rainbow
 let g:rainbow_active = 1
 
+" CtrlP
+set runtimepath^=~/.vim/bundle/ctrlp.vim
+
 " Shortcuts
 :command -nargs=1 PV :normal iputs "#{__FILE__}:#{__LINE__} <args>: #{<args>.inspect}"<ESC>
