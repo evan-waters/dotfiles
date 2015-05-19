@@ -15,14 +15,21 @@ alias rebuild-stubbery="docker build -t iancrosser/stubbery:server ."
 alias run-trelora-mysql="docker run --name trelora-mysql -v ~/.my.cnf:/root/.my.cnf -v ~/bin/trelora-prod-dump:/usr/bin/trelora-prod-dump -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -d mysql:latest"
 alias trelora-mysql-console="docker exec -it trelora-mysql bash"
 
-# App
+# App MyTRELORA.com
 alias run-gpigs-core-server="docker run -ti -p 127.0.0.1:3000:3000 -p 127.0.0.1:3001:3001 --name gpigs-core --link trelora-mysql:mysql -v ~/Projects/gpigs-core:/Projects/gpigs-core --env-file <(env | grep TRELORA) -e PORT=3000 -e RAILS_ENV=development -d iancrosser/trelora:server"
 alias run-gpigs-core-server-debug="docker run -ti -p 127.0.0.1:3000:3000 -p 127.0.0.1:3001:3001 --name gpigs-core --link trelora-mysql:mysql -v ~/Projects/gpigs-core:/Projects/gpigs-core --env-file <(env | grep TRELORA) -e PORT=3000 -e RAILS_ENV=development iancrosser/trelora:server"
 alias gpigs-core-console="docker exec -it gpigs-core bash"
 alias rebuild-gpigs-core="docker build -t iancrosser/trelora:server ."
 
-### Docker helpers
+# Box API
+alias run-box-api="docker run -ti -p 5000:5000 --name box-api --link redis:redis -v ~/Projects/box-api:/Projects/box-api --env-file <(env | grep BOX_API) -e PORT=5000 -e RACK_ENV=development iancrosser/trelora:box-api"
+alias box-api-console="docker exec -it box-api bash"
+alias rebuild-box-api="docker build -t iancrosser/trelora:box-api ."
 
+### Redis
+alias run-redis="docker run --name redis -d redis"
+
+### Docker helpers
 alias dockercleancontainers="docker ps -a --no-trunc| grep 'Exit' | awk '{print \$1}' | xargs -L 1 -r docker rm"
 alias dockercleanimages="docker images --no-trunc | grep none | awk '{print \$3}' | xargs -L 1 -r docker rmi"
 alias dockerclean="dockercleancontainers && dockercleanimages"
@@ -30,11 +37,14 @@ alias dockerclean="dockercleancontainers && dockercleanimages"
 run_in_docker() {
   path=`pwd`
   if [ "${path:26:100}" = "gpigs-core" ] ; then
-    docker run -it --rm --link trelora-mysql:mysql -v /home/iancrosser/Projects/gpigs-core:/Projects/gpigs-core --env-file <(env | grep TRELORA) iancrosser/trelora:server $@
+    docker run -it --rm --link trelora-mysql:mysql -v $path:${path:16:100} --env-file <(env | grep TRELORA) iancrosser/trelora:server $@
   fi
   if [ "${path:26:100}" = "stubbery" ] ; then
-    docker run -it --rm --link stubbery-postgres:postgres -v /home/iancrosser/Projects/stubbery:/Projects/stubbery iancrosser/stubbery:server $@
+    docker run -it --rm --link stubbery-postgres:postgres -v $path:${path:16:100} iancrosser/stubbery:server $@
+  fi
+  if [ "${path:26:100}" = "box-api" ] ; then
+    docker run -it --rm --link redis:redis -v $path:${path:16:100} --env-file <(env | grep BOX_API) iancrosser/trelora:box-api $@
   else
-    docker run -it --rm --link redis:redis -p 5000:5000 -v $path:${path:16:100} iancrosser/${path:26:100} $@
+    docker run -it --rm -v $path:${path:16:100} iancrosser/${path:16:100} $@
   fi
 }
