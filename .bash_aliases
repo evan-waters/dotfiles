@@ -22,7 +22,7 @@ alias gpigs-core-console="docker exec -it gpigs-core bash"
 alias rebuild-gpigs-core="docker build -t iancrosser/trelora:server ."
 
 # Box API
-alias run-box-api="docker run -ti -p 5000:5000 --name box-api --link redis:redis -v ~/Projects/box-api:/Projects/box-api --env-file <(env | grep BOX_API) -e PORT=5000 -e RACK_ENV=development iancrosser/trelora:box-api"
+alias run-box-api="docker run -ti -p 5000:5000 --name box-api --link redis:redis -v ~/Projects/box-api:/Projects/box-api --env-file <(env | grep BOX_API) -e PORT=5000 -e RACK_ENV=development -d iancrosser/trelora:box-api"
 alias box-api-console="docker exec -it box-api bash"
 alias rebuild-box-api="docker build -t iancrosser/trelora:box-api ."
 
@@ -38,13 +38,15 @@ run_in_docker() {
   path=`pwd`
   if [ "${path:26:100}" = "gpigs-core" ] ; then
     docker run -it --rm --link trelora-mysql:mysql -v $path:${path:16:100} --env-file <(env | grep TRELORA) iancrosser/trelora:server $@
-  fi
-  if [ "${path:26:100}" = "stubbery" ] ; then
-    docker run -it --rm --link stubbery-postgres:postgres -v $path:${path:16:100} iancrosser/stubbery:server $@
-  fi
-  if [ "${path:26:100}" = "box-api" ] ; then
-    docker run -it --rm --link redis:redis -v $path:${path:16:100} --env-file <(env | grep BOX_API) iancrosser/trelora:box-api $@
   else
-    docker run -it --rm -v $path:${path:16:100} iancrosser/${path:16:100} $@
+    if [ "${path:26:100}" = "stubbery" ] ; then
+      docker run -it --rm --link stubbery-postgres:postgres -v $path:${path:16:100} iancrosser/stubbery:server $@
+    else
+      if [ "${path:26:100}" = "box-api" ] ; then
+        docker run -it --rm --link redis:redis -v $path:${path:16:100} --env-file <(env | grep BOX_API) iancrosser/trelora:box-api $@
+      else
+        docker run -it --rm -v $path:${path:16:100} iancrosser/${path:16:100} $@
+      fi
+    fi
   fi
 }
