@@ -67,4 +67,7 @@ let g:rainbow_active = 1
 set runtimepath^=~/.vim/bundle/ctrlp.vim
 
 " Shortcuts
-:command -nargs=1 PV :normal iputs "#{__FILE__}:#{__LINE__} <args>: #{<args>.inspect}"<ESC>
+:command -nargs=1 PV :normal Aputs "#{__FILE__}:#{__LINE__} <args>: #{<args>.inspect}"<ESC>
+:command -nargs=1 Lscream :normal ALog.scream "#{__FILE__}:#{__LINE__} <args>: #{<args>.inspect}"<ESC>
+:command -nargs=1 Lshout :normal ALog.shout "#{__FILE__}:#{__LINE__} <args>: #{<args>.inspect}"<ESC>
+:command -nargs=1 Lsay :normal ALog.say "#{__FILE__}:#{__LINE__} <args>: #{<args>.inspect}"<ESC>
