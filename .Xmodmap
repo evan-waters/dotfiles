@@ -1,0 +1,22 @@
+! remove current lock bindings
+clear lock
+! add caps locks key as escape key
+keycode 66 = Escape
+
+! remove left super and control from bindings
+remove mod4 = Super_L
+remove control = Control_L
+! switch left super and control
+keycode 37 = Super_L
+keycode 133 = Control_L
+! add left super and control to bindings
+add mod4 = Super_L
+add control = Control_L
+
+! do the same thing for right super and control
+remove mod4 = Super_R
+remove control = Control_R
+keycode 105 = Super_R
+keycode 134 = Control_R
+add mod4 = Super_R
+add control = Control_R

@@ -53,10 +53,6 @@ fi
 # Path
 export PATH=${PATH}:~/bin
 
-# Trelora
-export PRE_WORKSPACE=/home/iancrosser
-export WORKSPACE=/Projects/gpigs-core
-
 # Aliases
 if [ -f ~/.bash_aliases ] ; then
   source ~/.bash_aliases
