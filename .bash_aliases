@@ -34,3 +34,11 @@ run_in_docker() {
   fi
 }
 alias rid=run_in_docker
+
+rails() {
+  rid rails $@
+}
+
+rake() {
+  rid rake $@
+}

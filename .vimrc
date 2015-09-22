@@ -66,6 +66,9 @@ let g:rainbow_active = 1
 " CtrlP
 set runtimepath^=~/.vim/bundle/ctrlp.vim
 
+" refresh any open files when a file is detected
+set autoread
+
 " Shortcuts
 :command -nargs=1 PV :normal Aputs "#{__FILE__}:#{__LINE__} <args>: #{<args>.inspect}"<ESC>
 :command -nargs=1 Lscream :normal ALog.scream "#{__FILE__}:#{__LINE__} <args>: #{<args>.inspect}"<ESC>
