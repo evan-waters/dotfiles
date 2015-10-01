@@ -1,2 +1,4 @@
-# dotfiles
-run install.sh from project root to place in your home dir
+# Vim
+`cd ~/.vim`
+`git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle`
+`:PluginInstall` from within vim
