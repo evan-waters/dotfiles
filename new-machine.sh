@@ -18,5 +18,5 @@ cp .Xmodmap ~/.Xmodmap
 git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 vim +PluginInstall +qall
-
+git config --global core.editor "vim"
 
